@@ -5,7 +5,6 @@ List of personally solved Javascript prototypes
 
 | No. | Questions |
 | --- | --------- |
-|   | **Algorithms** |
 |1  | [Custom Map](#bubble-sort) |
 |2  | [Custom Filter](#selection-sort) |
 |3  | [Custom Reduce](#inventor-update) |
