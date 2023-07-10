@@ -108,5 +108,305 @@ Finally, we output the result to a new array and return them.
     }
 ```
 
+5. ### Debounce
+   
+```javascript
+    function debounce(fn, timeout = 3000) {
+      let timer;
+    
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn(...args);
+        }, timeout);
+      };
+    }
+    
+    function log(text) {
+      console.log(text);
+    }
+    
+    const debouncedLog = debounce(log);
+```
+
+6. ### Throttle
+
+```javascript
+    function throttle(fn, time = 3000) {
+      let withinFunctionCall = false;
+    
+      return (...args) => {
+        if (withinFunctionCall) {
+          return;
+        }
+    
+        withinFunctionCall = true;
+    
+        setTimeout(() => {
+          fn(...args);
+          withinFunctionCall = false;
+        }, time);
+      };
+    }
+    
+    function log(text) {
+      console.log(text);
+    }
+    
+    const throttledLog = throttle(log);
+    
+    throttledLog('test');
+    throttledLog('test');
+```
+
+7. ### Promise.prototype.finally()
+
+```javascript
+    /**
+     * @param {Promise<any>} promise
+     * @param {() => void} onFinally
+     * @returns {Promise<any>}
+     */
+    const myFinally = async (promise, onFinally) => {
+      try {
+        const res = await promise
+        await onFinally()
+        return res
+      } catch (err) {
+        await onFinally()
+        throw err
+      }
+    }
+```
+
+8. ### Auto-retry Promise on rejection
+
+```javascript
+    /**
+     * @param {() => Promise<any>} promise
+     * @param {number} maximumRetryCount
+     * @return {Promise<any>}
+     */
+    const fetchWithAutoRetry = async (promise, maximumRetryCount) => {
+      try {
+        return await promise()
+      } catch (err) {
+        if (maximumRetryCount === 0) {
+          return Promise.reject(err)
+        }
+        return fetchWithAutoRetry(promise, maximumRetryCount - 1)
+      }
+    }
+```
+
+10. ### Implement `Promise.race()`
+
+```javascript
+    /**
+     * @param {Array<Promise>} promises
+     * @return {Promise}
+     */
+    const race = (promises) => {
+      return new Promise((resolve, reject) => {
+        promises.forEach(p => p.then(resolve, reject))
+      })
+    }
+```
+
+11. ### Implement `Promise.all()`
+
+```javascript
+    /**
+     * @param {Array<any>} promises - notice input might have non-Promises
+     * @return {Promise<any[]>}
+     */
+    function all(promises) {
+      return new Promise((resolve, reject) => {
+        if (!promises.length) {
+          resolve([])
+        }
+    
+        const poolResponses = []
+        let count = 0
+    
+        promises.forEach((p, idx) => {
+          Promise.resolve(p).then(res => {
+            poolResponses[idx] = res
+            count++
+            if (count === promises.length) {
+              resolve(poolResponses)
+            }
+          }).catch(err => {
+            reject(err)
+          })
+        })
+      })
+    }
+```
+
+12. ### Implement `Promise.allSettled()`
+
+```javascript
+    /**
+     * @param {Array<any>} promises - notice that input might contains non-promises
+     * @return {Promise<Array<{status: 'fulfilled', value: any} | {status: 'rejected', reason: any}>>}
+     */
+    const allSettled = async (promises) => {
+      if (!promises.length) {
+        return []
+      }
+    
+      const poolResponses = []
+      let counter = 0
+    
+      for (let i = 0; i < promises.length; i++) {
+        try {
+          const res = await promises[i]
+          poolResponses[i] = {
+            status: 'fulfilled',
+            value: res
+          }
+        } catch (err) {
+          poolResponses[i] = {
+            status: 'rejected',
+            reason: err
+          }
+        } finally {
+          counter++
+          if (counter === promises.length) {
+            return poolResponses
+          }
+        }
+      }
+    }
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+
+```javascript
+
+```
+
+```javascript
+
+```
+
+
+
+
 
    **[⬆ Back to Top](#table-of-contents)**
