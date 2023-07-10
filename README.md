@@ -343,29 +343,97 @@ Finally, we output the result to a new array and return them.
 
 ```
 
+14. ### Currying
 
 ```javascript
+    const add = (x) => {
+      function addY(y) {
+        return x + y;
+      }
+    
+      return addY;
+    };
 
+    const add = (x) => {
+      return (y) => {
+        return x + y;
+      };
+    };
+
+    const add = (x) => (y) => x + y;
 ```
 
+15. ### Array.prototype.filter
 
 ```javascript
-
+    const filter = (arr, callback) => {
+      const result = [];
+      for (let i = 0; i < arr.length; i++) {
+        callback(arr[i], i, arr) && result.push(arr[i]);
+      }
+      return result;
+    }
+    
+    const arr = [1, 2, 3, 4, 4, 5];
+    filter(arr, (item) => item % 2 !== 0);
 ```
 
+16. ### Array.prototype.reduce
 
 ```javascript
-
+    const reduce = (arr, callback, initVal) => {
+      let result = initVal;
+    
+      for (let i = 0; i < arr.length; i++) {
+        result = callback(result, arr[i], i, arr);
+      }
+    
+      return result;
+    }
+    
+    const arr = [1, 2 ,3 ,4 ,5];
+    
+    reduce(arr, (acc, item) => acc + item, 0);
 ```
 
+17. ### Array.prototype.foreach
 
 ```javascript
-
+    Array.prototype.myForEach = function(callback){
+       for (var i = 0; i < this.length; i++) {
+          callback(this[i], i, this);
+       }   
+    }
+    
+    const arrData = [0,1,2,3,4,5,6,7,8,9];
+    
+    arrData.myForEach((element) => {
+       console.log(element)
+    })
 ```
 
+18. ### Polyfil for bind
 
 ```javascript
-
+    let obj = {
+      name: 'Jack',
+    };
+    
+    let myFunc = function (id, city) {
+      console.log(`${this.name}, ${id}, ${city}`);  // id will be undefined
+    };
+    
+    // Accepting any number of arguments passed to myBind
+    Function.prototype.myBind = function (obj, ...args) {
+      let func = this;
+      // Accepting arguments passed to newFunc
+      return function (...newArgs) {
+        func.apply(obj, [...args, ...newArgs]);
+      };
+    };
+    
+    let newFunc = myFunc.myBind(obj, 'a_random_id')
+    newFunc('New York') // Jack, a_random_id, New York
 ```
 
 
