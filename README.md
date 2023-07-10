@@ -66,12 +66,47 @@ Finally, we output the result to a new array and return them.
 
 ```javascript
     Array.prototype.mymap = function(callback) {
-    const resultArray = [];
-    for (let index = 0; index < this.length; index++) {
-        resultArray.push(callback(this[index], index, this));
+        const resultArray = [];
+        for (let index = 0; index < this.length; index++) {
+            resultArray.push(callback(this[index], index, this));
+        }
+        return resultArray;
     }
-    return resultArray;
-}
 ```
+
+3. ### Flatten Array
+
+```javascript
+    function flattenArr(arrToFlatten, depth) {
+        return arrToFlatten.reduce((acc, value) => {
+          if (value instanceof Array && depth > 0) {
+            return acc.concat(flattenArr(value, depth - 1));
+          }
+          return acc.concat(value);
+        }, []);
+    }
+```
+
+4. ### Memoisation
+
+```javascript
+    function memoize(fn) {
+      const cache = new Map();
+    
+      return (...args) => {
+        const key = JSON.stringify(args);
+    
+        if (cache.has(key)) {
+          return cache.get(key);
+        }
+    
+        const result = fn(...args);
+        cache.set(key, result);
+    
+        return result;
+      };
+    }
+```
+
 
    **[⬆ Back to Top](#table-of-contents)**
