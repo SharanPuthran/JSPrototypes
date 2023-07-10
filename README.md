@@ -50,4 +50,28 @@ List of personally solved Javascript prototypes
     console.log(sortedArray) // Output : [ 1, 1, 2, 2, 4, 8, 32, 43, 43, 55, 63, 92, 123, 123, 234, 345, 5643 ]
 ```
 
+2. ### Custom Map
+
+We will create a new method[mymap] which allows us to `useArray.mymap()`
+In order to use `Array.mymap()` we have to have `mymap()`'s definition in `Array.prototype`.
+Now we will be able to run `[1,2,3].mymap();` which will return `undefined`.
+map is called with function as an argument inside it. `(eg:[1,2].map(function(val, index, arr){})).` So, our `mymap` function should accept a function as an argument.
+The function in the argument should be called for each value in the array with 3 arguments:
+`The current element`
+`Current element's index`
+`Entire Array`
+`this` refers to the array on which `mymap` is done. this is the array itself.
+Finally, we output the result to a new array and return them.
+
+
+```javascript
+    Array.prototype.mymap = function(callback) {
+    const resultArray = [];
+    for (let index = 0; index < this.length; index++) {
+        resultArray.push(callback(this[index], index, this));
+    }
+    return resultArray;
+}
+```
+
    **[⬆ Back to Top](#table-of-contents)**
