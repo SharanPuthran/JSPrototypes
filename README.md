@@ -436,9 +436,26 @@ Finally, we output the result to a new array and return them.
     newFunc('New York') // Jack, a_random_id, New York
 ```
 
+18. ### Object flatten
 
 ```javascript
-
+    // flattenObject.ts
+    export const flattenObject = (obj:Object, parentKey?:string) => {
+      let result = {};
+    
+      Object.keys(obj).forEach((key) => {
+        const value = obj[key];
+        const _key = parentKey ? parentKey + '.' + key : key;
+        if (typeof value === 'object') {
+          result = { ...result, ...flattenObject(value, _key) };
+        } else {
+          result[_key] = value;
+        }
+        console.log(`parentKey: "${parentKey}", _key: "${_key}"`);
+      });
+    
+      return result;
+    };
 ```
 
 
