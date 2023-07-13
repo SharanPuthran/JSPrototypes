@@ -361,6 +361,10 @@ Finally, we output the result to a new array and return them.
     };
 
     const add = (x) => (y) => x + y;
+
+    curr(5)(4)(2)()
+    curr = (x) => (y) => y ? curr(x+y) : x;
+    console.log(result);
 ```
 
 15. ### Array.prototype.filter
