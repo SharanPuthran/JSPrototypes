@@ -523,10 +523,34 @@ Finally, we output the result to a new array and return them.
     
     subArray();
 ```
-
+21. ### Sum of maximum subarray using sliding window
 
 ```javascript
-
+    let a = [34, 53, 85, 48, 92, 13, 1]
+    k = 3;
+    
+    var twoSum = function(arr, count) {
+        let windowArr = [];
+        let maxSum = 0;
+        let maxSubArr = [];
+        if(arr.length){
+            for(let i = 0; i < count; i++){
+                windowArr.push(arr[i]);
+            }   
+            maxSum = sum(windowArr);
+            for(let j = count; j < arr.length; j++){
+                windowArr.shift();
+                windowArr.push(arr[j]);
+                if(maxSum < sum(windowArr)){
+                    maxSubArr =[...windowArr];
+                }
+            }
+            console.log(maxSubArr);
+        }
+        
+    };
+    
+    const sum = (arr) => arr.reduce((acc, curr) => acc + curr);
 ```
 
 
