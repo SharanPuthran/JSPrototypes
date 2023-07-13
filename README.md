@@ -462,14 +462,39 @@ Finally, we output the result to a new array and return them.
     };
 ```
 
+19. ### Form a largest number out of array
 
 ```javascript
-
+    var largestNumber = function(nums) {
+        nums.sort((a,b)=>{
+            let sa = a.toString()
+            let sb = b.toString()
+            return parseInt(sa + sb) > parseInt(sb + sa) ? -1 : 1
+        })
+        if(nums[0] === 0) return '0'
+        
+        return nums.join('')
+    };
 ```
-
+20. ### Object with function chaining
 
 ```javascript
+    const result = calc.add(19).add(5).subtract(4).subtract(5).total();
 
+    let calc = {
+        ans: 0,
+        add: function(x){
+            ans = ans + x;
+            return this;
+        },
+        subtract: function(y){
+            ans = ans - y;
+            return this;
+        },
+        total: function(){
+            return ans;
+        }
+    }
 ```
 
 
