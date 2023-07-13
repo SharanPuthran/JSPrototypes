@@ -497,10 +497,31 @@ Finally, we output the result to a new array and return them.
     const result = calc.add(19).add(5).subtract(4).subtract(5).total();
     console.log(result);
 ```
-
+20. ### Subarray with sum equal to k
 
 ```javascript
-
+    let arr = [1, 4, 2, 6, 7, 20];
+    let k = 20;
+    let minSub = [];
+    let minLen = arr.length;
+    
+    function subArray() {
+      for (let i = 0; i < arr.length; i++) {
+        let subSum = 0;
+        for (let j = i; j < arr.length; j++) {
+          subSum += arr[j];
+          if (subSum >= k && j - i + 1 <= minLen) {
+            minLen = j - i + 1;
+            minSub = arr.slice(i, j + 1);
+            break; // Skip unnecessary calculations
+          }
+        }
+      }
+    
+      console.log(minSub);
+    }
+    
+    subArray();
 ```
 
 
