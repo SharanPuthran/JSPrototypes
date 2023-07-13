@@ -385,14 +385,12 @@ Finally, we output the result to a new array and return them.
 16. ### Array.prototype.reduce
 
 ```javascript
-    const reduce = (arr, callback, initVal) => {
-      let result = initVal;
-    
-      for (let i = 0; i < arr.length; i++) {
-        result = callback(result, arr[i], i, arr);
-      }
-    
-      return result;
+    Array.prototype.myReduce = function(cb, initialVal){
+        let accumulator = initialVal;
+        for(let i = 0; i < this.length; i++){
+            accumulator = accumulator ? cb(accumulator, this[i], i, this) : this[i];
+        }
+        return accumulator;
     }
     
     const arr = [1, 2 ,3 ,4 ,5];
