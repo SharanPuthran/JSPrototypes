@@ -552,10 +552,16 @@ Finally, we output the result to a new array and return them.
     
     const sum = (arr) => arr.reduce((acc, curr) => acc + curr);
 ```
-
+22. ### Array.prototype.map - `Polyfill for Map`
 
 ```javascript
-
+    Array.prototype.myMap = function(cb){
+        let empArr = [];
+        for(let i = 0; i < this.length; i++){
+            empArr.push(cb(this[i], i, this));
+        }
+        return empArr;
+    }
 ```
 
 
