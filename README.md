@@ -370,12 +370,12 @@ Finally, we output the result to a new array and return them.
 15. ### Array.prototype.filter
 
 ```javascript
-    const filter = (arr, callback) => {
-      const result = [];
-      for (let i = 0; i < arr.length; i++) {
-        callback(arr[i], i, arr) && result.push(arr[i]);
-      }
-      return result;
+    Array.prototype.myFilter = function(cb){
+        let empArr = [];
+        for(let i = 0; i < this.length; i++){
+            if(cb(this[i], i, this)) empArr.push(this[i]);
+        }
+        return empArr;
     }
     
     const arr = [1, 2, 3, 4, 4, 5];
