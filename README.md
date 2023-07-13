@@ -479,22 +479,23 @@ Finally, we output the result to a new array and return them.
 20. ### Object with function chaining
 
 ```javascript
-    const result = calc.add(19).add(5).subtract(4).subtract(5).total();
-
     let calc = {
         ans: 0,
         add: function(x){
-            ans = ans + x;
+            this.ans = this.ans + x;
             return this;
         },
         subtract: function(y){
-            ans = ans - y;
+            this.ans = this.ans - y;
             return this;
         },
         total: function(){
-            return ans;
+            return this.ans;
         }
     }
+    
+    const result = calc.add(19).add(5).subtract(4).subtract(5).total();
+    console.log(result);
 ```
 
 
