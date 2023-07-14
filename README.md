@@ -561,69 +561,260 @@ Finally, we output the result to a new array and return them.
         return empArr;
     }
 ```
-
+23. ###Best Time to Buy and Sell Stock
 
 ```javascript
+    var maxProfit = function(prices) {
+        let max = 0;
+        let l = 0, r=1;
+        while( r < prices.length){
+            if(prices[l] > prices[r]){
+                l = r;
+            }
+            max = Math.max(max,prices[r] - prices[l]);
+            r++
+        }
+        return max
+    };
+```
+24. ###Longest Substring Without Repeating Characters
 
+```javascript
+    var lengthOfLongestSubstring = function (s) {
+        let set = new Set();
+        let left = 0;
+        let maxSize = 0;
+    
+        if (s.length === 0) return 0;
+        if (s.length === 1) return 1;
+    
+        for (let i = 0; i < s.length; i++) {
+    
+            while (set.has(s[i])) {
+                set.delete(s[left])
+                left++;
+            }
+            set.add(s[i]);
+            maxSize = Math.max(maxSize, i - left + 1)
+        }
+        return maxSize;
+    }
+```
+25. ### Two Sum
+
+```javascript
+    var twoSum = function(nums, target) {
+        for (let i = 0; i < nums.length; i++){
+            for (let k = i + 1; k < nums.length; k++){
+                if (nums[k] + nums[i] === target){
+                    return [k, i]
+                }
+            }
+        }
+    };
+    console.log(twoSum([2,7,11,15], 55))
+```
+27. ### Contains Duplicate
+
+```javascript
+    var containsDuplicate = function(nums) {
+        let set = new Set(nums);
+        return set.size !== nums.length;
+    };
+```
+28. ### Valid Anagram
+
+```javascript
+    var isAnagram = (s, t) => {
+        const isEqual = s.length === t.length;
+        if (!isEqual) return false;
+    
+        return reorder(s) === reorder(t); /* Time O(N * logN) | Space O(N) */
+    };
+    
+    const reorder = (str) => str
+        .split('')                          /* Time O(N)          | Space O(N) */
+        .sort((a, b) => a.localeCompare(b)) /* Time O(N * log(N)) | Space O(1 || log(N)) */
+        .join(''); 
+```
+29. ### Valid Palindrome
+
+```javascript
+    var isPalindrome = function(s) {
+        let newStr = s.toLowerCase().replace(/[^0-9a-z]/g, "");
+        let left = 0, right = newStr.length-1;
+        
+        while(left < right){
+            if(newStr[left] !== newStr[right]) return false
+            left++
+            right--
+        }
+        return true
+    };
+```
+30. ### Reverse String
+
+```javascript
+    var reverseString = function(s) {
+        let left = 0
+        let right = s.length - 1
+        while(left <= right) {
+            let temp = s[left]
+            s[left] = s[right]
+            s[right] = temp
+            left++
+            right--
+        }
+        return s;
+    };
+```
+31. ### Remove Duplicates from Sorted List
+
+```javascript
+    const deleteDuplicates = function(head){
+        let node = head;
+        while(node !== null){
+            if(node.next !== null){
+                if(node.val === node.next.val){
+                    node.next = node.next.next
+                    continue
+                }
+            }
+            node = node.next
+        }
+        return head
+    };
+```
+32. ### Fibonacci Number
+
+```javascript
+    const fib = (n, a = 0, b = 1) => {
+        return n === 0 ? a : fib(n - 1, b, a + b);
+    }
+```
+33. ### Maximum Depth of Binary Tree
+
+```javascript
+    /**
+     * Definition for a binary tree node.
+     * function TreeNode(val, left, right) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.left = (left===undefined ? null : left)
+     *     this.right = (right===undefined ? null : right)
+     * }
+     */
+    /**
+     * @param {TreeNode} root
+     * @return {number}
+     */
+    var maxDepth = function(root) {
+        if(root == null) return 0;
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }; 
+```
+34. ### Length of last word
+
+```javascript
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    var lengthOfLastWord = function(s) {
+        let arr = s.trim().split(" ");
+        return arr[arr.length-1].length;
+    };
+```
+35. ### Top K Frequent Elements
+
+```javascript
+    /**
+     * @param {number[]} nums
+     * @param {number} k
+     * @return {number[]}
+     */
+    var topKFrequent = function(nums, k) {
+        let map = {}
+        for (let num of nums) {
+            if (!map[num]) map[num] = 0
+            map[num]++
+        }
+    
+        return [...Object.keys(map)].sort((a,b) => map[b] - map[a]).slice(0,k)
+    };
+```
+36. ### Product of Array except Self
+
+```javascript
+    /**
+     * @param {number[]} nums
+     * @return {number[]}
+     */
+    function productExceptSelf(nums) {
+        const result = [];
+        let prefix = 1;
+        let postfix = 1;
+        
+        for (let i = 0; i < nums.length; i++) {
+            result[i] = prefix;
+            prefix *= nums[i];
+        }
+        for (let i = nums.length - 2; i >= 0; i--) {
+            postfix *= nums[i + 1];
+            result[i] *= postfix;
+        }
+        
+        return result;
+    };
 ```
 
+37. ### Valid Paranthesis
 
 ```javascript
-
+    var isValid = function(s) {
+        // Initialize stack to store the closing brackets expected...
+        let stack = [];
+        // Traverse each charater in input string...
+        for (let idx = 0; idx < s.length; idx++) {
+            // If open parentheses are present, push it to stack...
+            if (s[idx] == '{') {
+                stack.push('}');
+            } else if (s[idx] == '[') {
+                stack.push(']');
+            } else if (s[idx] == '(') {
+                stack.push(')');
+            }
+            // If a close bracket is found, check that it matches the last stored open bracket
+            else if (stack.pop() !== s[idx]) {
+                return false;
+            }
+        }
+        return !stack.length;
+    };
 ```
 
+38. ### Product of Array except Self
 
 ```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-
-```javascript
-
-```
-
-```javascript
-
+    /**
+     * @param {number[]} nums
+     * @return {number[]}
+     */
+    function productExceptSelf(nums) {
+        const result = [];
+        let prefix = 1;
+        let postfix = 1;
+        
+        for (let i = 0; i < nums.length; i++) {
+            result[i] = prefix;
+            prefix *= nums[i];
+        }
+        for (let i = nums.length - 2; i >= 0; i--) {
+            postfix *= nums[i + 1];
+            result[i] *= postfix;
+        }
+        
+        return result;
+    };
 ```
 
 
