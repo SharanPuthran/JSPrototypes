@@ -792,28 +792,20 @@ Finally, we output the result to a new array and return them.
     };
 ```
 
-38. ### Product of Array except Self
+38. ### Remove Duplicates from Sorted Array
 
 ```javascript
-    /**
-     * @param {number[]} nums
-     * @return {number[]}
-     */
-    function productExceptSelf(nums) {
-        const result = [];
-        let prefix = 1;
-        let postfix = 1;
-        
-        for (let i = 0; i < nums.length; i++) {
-            result[i] = prefix;
-            prefix *= nums[i];
+   var removeDuplicates = function(nums) {
+        if(nums.length === 0) return 0;
+        let i = 0;
+    
+        for(let j = 1; j < nums.length; j++){
+            if(nums[i] !== nums[j]){
+                i++;
+                nums[i] = nums[j];
+            }
         }
-        for (let i = nums.length - 2; i >= 0; i--) {
-            postfix *= nums[i + 1];
-            result[i] *= postfix;
-        }
-        
-        return result;
+        return i+1;
     };
 ```
 
