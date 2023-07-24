@@ -863,7 +863,7 @@ Finally, we output the result to a new array and return them.
       
       // So we have hypothesis algorithm
       // That is, `n` minus `d` until `result(n)` is smaller than `d`, where `d` start at 1 and increment by 1 for each iteration. 
-         If `result(n)` is 0, subtract 1, else return the result
+      // If `result(n)` is 0, subtract 1, else return the result
       
       let d = 1;
       
