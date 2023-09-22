@@ -882,7 +882,7 @@ Finally, we output the result to a new array and return them.
 
 42. ### Remove duplicate from Array of Objects
 
-```
+```javascript
     let inputArr = [
       { name: 'abc', age: 21 },
       { name: 'abc', age: 21 },
@@ -894,6 +894,47 @@ Finally, we output the result to a new array and return them.
     console.log(uniqueArr);
 
 ```
+
+43. ### Print 1 to 5 using var and let using settimeout and closure
+
+```javascript
+    // Using Let
+    for (var i = 1; i <= 5; i++) {
+      (function (j) {
+        setTimeout(() => {
+          console.log(j);
+        },1000);
+      })(i);
+    }
+
+    // Using Let
+    for (let i = 1; i <= 5; i++) {
+      setTimeout(() => {
+        console.log(i);
+      }, 1000);
+    }
+
+```
+44. ### Currying till n number
+
+```javascript
+    const currySum = (acc = 0) => (n) => {
+      if (n === undefined) {
+        return acc;
+      }
+      return currySum(acc + n);
+    };
+    
+    // Usage example:
+    const sum = currySum();
+    
+    console.log(sum);         // Outputs: 0
+    console.log(sum(1));      // Outputs: 1
+    console.log(sum(1)(2));   // Outputs: 3
+    console.log(sum(1)(2)(3)); // Outputs: 6
+```
+
+
 
 
 
