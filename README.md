@@ -880,7 +880,20 @@ Finally, we output the result to a new array and return them.
     };
 ```
 
+42. ### Remove duplicate from Array of Objects
 
+```
+    let inputArr = [
+      { name: 'abc', age: 21 },
+      { name: 'abc', age: 21 },
+      { name: 'def', age: 30 }
+    ];
+    
+    let uniqueArr = inputArr.filter((v, i, a) => a.findIndex(v2 => ['name', 'age'].every(k => v2[k] === v[k])) === i);
+    
+    console.log(uniqueArr);
+
+```
 
 
 
